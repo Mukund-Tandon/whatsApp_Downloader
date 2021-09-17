@@ -9,29 +9,26 @@ import 'package:test_downloading_youtube/Widgets/VideoGridView.dart';
 import 'package:test_downloading_youtube/Screens/VideoView.dart';
 import 'package:test_downloading_youtube/Screens/image_status_screen.dart';
 import 'package:test_downloading_youtube/Screens/video_status_screen.dart';
-import 'package:test_downloading_youtube/Screens/savedStatus.dart';
-
-class MainScreen extends StatefulWidget {
-
+import 'package:test_downloading_youtube/Utilities/getSavedFiles.dart';
+class SavedStatus extends StatefulWidget {
 
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _SavedStatusState createState() => _SavedStatusState();
 }
 
-class _MainScreenState extends State<MainScreen> {
-  bool loader= true;
-  List file=[];
+class _SavedStatusState extends State<SavedStatus> {
+  List file= [];
   int videoNumber= 0;
   List videoFile=[];
   List imageFile=[];
   List<VideoPlayerController> controllerlist=[];
   void getDirectoryFiles()async{
     print('1');
-    file =await getWhatsAppStatusFiles();
-     setVideoController();
+    file =await getSavedStatusFiles();
+    setVideoController();
     print('1');
     setState(() {
-      loader=false;
+
     });
     print('1');
   }
@@ -79,46 +76,32 @@ class _MainScreenState extends State<MainScreen> {
   }
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-        ),
-        child: Scaffold(
-          appBar: AppBar(
-            title: Container(
-              width: DeviceWidth(context),
-              alignment: Alignment.center,
-              child: Text(
-                'Status Downloader'
-              ),
-            ),
-            backgroundColor:Color(0xff009688),
-            bottom: TabBar(
-              indicatorColor: Colors.white,
-              physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              tabs: [
-                Tab(
-                  text: 'Images',
-                ),
-                Tab(
-                  text: 'Videos',
-                ),
-                Tab(
-                  text: 'Saved',
-                )
-              ],
+    return Container(
+      height: DeviceHieght(context),
+      width: DeviceWidth(context),
+      // color: Colors.yellow,
+      child: Column(
+        children: [
+          // Container(
+          //   height: 100/843.43*DeviceHieght(context),
+          //   width: DeviceWidth(context),
+          //   color: Color(0xff009688),
+          // ),
+          // loader==true?CircularProgressIndicator():
+          Expanded(
+            child: Container(
+              // color: Colors.red,
+              child: GridView.builder
+                (
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                  itemCount: file.length,
+                  itemBuilder:(BuildContext context, int index){
+                    return ImageGridView(path: '${file[index]}',file: file,index: index,);
+                  }),
             ),
           ),
-          body: loader==true?CircularProgressIndicator():TabBarView(
-            children: [
-              ImageStatus(file: imageFile,),
-              VideoStatus(file: videoFile,controllerList: controllerlist,),
-              SavedStatus(),
-            ],
-          ),
-        ),
+
+        ],
       ),
     );
   }

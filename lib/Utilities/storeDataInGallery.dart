@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void create_directory(String filepath)async {
   bool status = await Permission.storage.status.isDenied;
@@ -36,6 +37,7 @@ void create_directory(String filepath)async {
   await image.copy("$myImagePath/${filepath.substring(index)}");
   var load= await MediaScanner.loadMedia(path: '${myImagePath}');
   print(newImage.path);
+  Fluttertoast.showToast(msg: 'Saved',);
 
 }
 // Future<File> getImageFileFromFilePah(String filePath) async {
