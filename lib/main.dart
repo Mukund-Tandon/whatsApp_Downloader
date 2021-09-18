@@ -6,9 +6,15 @@ import 'package:test_downloading_youtube/Models/selectedItemscount.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
-      ChangeNotifierProvider(
-        create: (context)=>SelectedItemCount(),
-          child: MyApp())
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context)=>SelectedItemCount()),
+
+        ],
+        child: MyApp(),
+      ),
+
   );
 }
 

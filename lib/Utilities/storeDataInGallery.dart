@@ -1,15 +1,12 @@
-import 'package:flutter/services.dart';
 import 'package:media_scanner/media_scanner.dart';
-import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void create_directory(String filepath)async {
   bool status = await Permission.storage.status.isDenied;
-  print(status);
+  print('filepath=$filepath');
   int index = filepath.indexOf('.Statuses')+11;
   if (status == true) {
     await Permission.storage.request();

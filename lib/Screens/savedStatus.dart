@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
 import 'package:test_downloading_youtube/Utilities/getWhatsappStatusDirectories.dart';
 import 'package:video_player/video_player.dart';
-import 'package:test_downloading_youtube/Widgets/ImageGridView.dart';
+import 'package:test_downloading_youtube/Widgets/savedimagesView.dart';
 import 'package:test_downloading_youtube/Widgets/VideoGridView.dart';
 import 'package:test_downloading_youtube/Screens/VideoView.dart';
 import 'package:test_downloading_youtube/Screens/image_status_screen.dart';
@@ -35,7 +35,7 @@ class _SavedStatusState extends State<SavedStatus> {
 
   void setVideoController()async{
     print(file.length);
-    int c= 0;
+    int c= 0;//used for iterating controlList at line 47
     for(int i= 0; i<file.length;i++){
       print(i);
       if(file[i].toString().endsWith('.mp4')){
@@ -63,12 +63,14 @@ class _SavedStatusState extends State<SavedStatus> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('staete Init');
     getDirectoryFiles();
   }
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+    print('dispo');
     for(int i= 0; i<videoNumber;i++){
       controllerlist[i].dispose();
     }
@@ -96,7 +98,7 @@ class _SavedStatusState extends State<SavedStatus> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                   itemCount: file.length,
                   itemBuilder:(BuildContext context, int index){
-                    return ImageGridView(path: '${file[index]}',file: file,index: index,);
+                    return SavedImagesGridView(path: '${file[index]}',file: file,index: index,);
                   }),
             ),
           ),

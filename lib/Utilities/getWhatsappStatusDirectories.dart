@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter/services.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
 Future<List> getWhatsAppStatusFiles()async{
   bool status1 = await Permission.manageExternalStorage.isDenied;
@@ -14,9 +12,8 @@ Future<List> getWhatsAppStatusFiles()async{
   // print('2');
   List file= [];
   print('2');
-  var d=await getExternalStorageDirectory();
-  print(d!.path);
-  var completer = new Completer();
+
+
   Directory s= Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
   bool dirExist= await s.exists();
   if(dirExist==false){
