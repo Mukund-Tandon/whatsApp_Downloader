@@ -1,22 +1,31 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_downloading_youtube/Models/savedStatusListModel.dart';
 import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
 import 'package:video_player/video_player.dart';
-import 'package:test_downloading_youtube/Utilities/storeDataInGallery.dart';
+import 'package:test_downloading_youtube/Screens/item_select_screen.dart';
 import 'package:test_downloading_youtube/Screens/VideoView.dart';
+import 'package:test_downloading_youtube/Utilities/storeDataInGallery.dart';
+import 'package:provider/provider.dart';
 class VideoGridView extends StatefulWidget {
   String filePath;
-  VideoPlayerController controller;
-  VideoGridView({this.filePath='', required this.controller});
+
+  List file;
+  int index;
+  VideoGridView({this.filePath='', required this.file , required this.index});
 
   @override
   _VideoGridViewState createState() => _VideoGridViewState();
 }
 
 class _VideoGridViewState extends State<VideoGridView> {
+  bool isSaved= false;//checks if the image is saved or not !! more work to do on this ----!!!>> remove download symbol when downloaded
+  late VideoPlayerController controller;
   void initialize()async{
-    await widget.controller.initialize();
+    controller = VideoPlayerController.file(File('${widget.filePath}'));
+    await controller.initialize();
+
     setState(() {
 
     });
@@ -25,62 +34,77 @@ class _VideoGridViewState extends State<VideoGridView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // checkSaved();
+    initialize();
+
 
   }
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    controller.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
+    double containerHeight= (130/843.43)*DeviceHieght(context);
+    double containerwidth= (135/411.43)*DeviceWidth(context);
     return Container(
-      height: (135/843.43)*DeviceHieght(context),
-      width: (135/411.43)*DeviceWidth(context),
+      height:containerHeight,
+      width: containerwidth,
       margin: EdgeInsets.only(top: 10),
       child: Stack(
         children: [
           GestureDetector(
           onTap: (){
-            print('touch');
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> VideoView(path: widget.filePath)));
+
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> VideoView(path: widget.filePath,isSaved: isSaved,)));
 
           },
+            onLongPress: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectItem(file: widget.file, index: widget.index)));
+            },
           child: Container(
-            height: (135/843.43)*DeviceHieght(context),
-            width: (135/411.43)*DeviceWidth(context),
-            // color: Colors.black54,
+            height:containerHeight,
+            width: containerwidth,
+            alignment: Alignment.center,
             margin: EdgeInsets.all(6),
-            // padding: EdgeInsets.all(2),
-            child: widget.controller.value.isInitialized?ClipRRect(
+            child: controller.value.isInitialized?ClipRRect(
               borderRadius: BorderRadius.circular(15),
-                child: VideoPlayer(widget.controller)):CircularProgressIndicator(),
+                child: VideoPlayer(controller)):CircularProgressIndicator(),
           ),
         ),
-          // Positioned(
-          //   child: GestureDetector(
-          //     onTap: (){
-          //       create_directory(widget.filePath);
-          //       print('done');
-          //     },
-          //     child: Container(
-          //       width: (28/411.43)*DeviceWidth(context),
-          //       height:(25/843.43)*DeviceHieght(context),
-          //       color: Colors.black45.withOpacity(0.6),
-          //       child: Icon(Icons.download_rounded,color: Colors.white,),
-          //     ),
-          //   ),
-          // ),
           Positioned(
-            top: 40,
-              left: 35,
+              top: .30*containerHeight,
+              left:.35*containerwidth,
               child: GestureDetector(
                 onTap: (){
                   print('touch');
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> VideoView(path: widget.filePath)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> VideoView(path: widget.filePath,isSaved: false,)));//videoPlayer (lib/Screens/VideoView)
                 },
                 child: Container(
             width: (28/411.43)*DeviceWidth(context),
             height:(25/843.43)*DeviceHieght(context),
-            color: Colors.black45.withOpacity(0.6),
-            child: Icon(Icons.play_arrow,color: Colors.white,),
+            child: Icon(Icons.play_arrow,color: Colors.white,size: 35,),
           ),
-              ))
+              )),
+          isSaved?Container(height: 0,width: 0,):Positioned(
+            top: .65*containerHeight,
+            left:.37*containerwidth,
+            child: Container(
+              height: .25*containerHeight,
+              width: .25*containerwidth,
+              child: FloatingActionButton(
+                heroTag: 'btn${widget.index}',
+                backgroundColor: Color(0xff009688),
+                onPressed:(){
+                  create_directory(widget.filePath);//saved to gallery(lib/Utilities/storeDataInGallery)
+                },
+                child: Icon(Icons.download_rounded,color: Colors.white,),
+
+              ),
+            ),
+          ),
         ]
       ),
     );

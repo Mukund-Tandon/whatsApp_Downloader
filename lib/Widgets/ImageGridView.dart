@@ -5,11 +5,20 @@ import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
 import 'package:test_downloading_youtube/Utilities/storeDataInGallery.dart';
 import 'package:test_downloading_youtube/Screens/ImageView.dart';
 import 'package:test_downloading_youtube/Screens/item_select_screen.dart';
-class ImageGridView extends StatelessWidget {
-String path;
-List file;
-int index;
+class ImageGridView extends StatefulWidget {
+String path;//to be  passed to Image View
+List file;//to be passd to selected item screen
+int index;//to be passed to selected item Screen to keep ckech which image was pressed
 ImageGridView({ required this.path, required this.file, required this.index});
+
+  @override
+  _ImageGridViewState createState() => _ImageGridViewState();
+}
+
+class _ImageGridViewState extends State<ImageGridView> {
+  bool isSaved= false;//checks if the image is saved or not !! more work to do on this ----!!!>> remove download symbol when downloaded
+
+
   @override
   Widget build(BuildContext context) {
     double containerHeight= (130/843.43)*DeviceHieght(context);
@@ -17,16 +26,15 @@ ImageGridView({ required this.path, required this.file, required this.index});
     return Container(
       height: containerHeight,
       width: containerwidth,
-
       margin: EdgeInsets.only(top: 10),
       child: Stack(
         children: [GestureDetector(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageView(path: path,isSaved: false,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageView(path: widget.path,isSaved: false,)));//(lib/Screens/ImageView.dart)
 
           },
           onLongPress: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectItem(file: file,index: index,)));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>SelectItem(file: widget.file,index: widget.index,)));//(lib/Screens/item_select_screeen.dart)
           },
           child: Container(
             height: containerHeight,
@@ -35,27 +43,24 @@ ImageGridView({ required this.path, required this.file, required this.index});
               borderRadius: BorderRadius.circular(15),
               color: Colors.black54,
             ),
-            // alignment: Alignment.center,
-            // color: Colors.black54,
             margin: EdgeInsets.all(6),
-            // padding: EdgeInsets.all(2),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.file(File('$path'),fit: BoxFit.fill,)),
+                child: Image.file(File('${widget.path}'),fit: BoxFit.fill,)),
           ),
         ),
-          Positioned(
+          //!!!->>work to do on isSaved
+          isSaved?Container(width: 0,height: 0,):Positioned(
             top: .65*containerHeight,
             left:.37*containerwidth,
             child: Container(
               height: .25*containerHeight,
               width: .25*containerwidth,
               child: FloatingActionButton(
-                heroTag: 'btn$index',
+                heroTag: 'btn${widget.index}',
                 backgroundColor: Color(0xff009688),
                 onPressed:(){
-
-                  create_directory(path);
+                  create_directory(widget.path);//saved to gallery(lib/Utilities/storeDataInGallery)
                 },
                 child: Icon(Icons.download_rounded,color: Colors.white,),
 

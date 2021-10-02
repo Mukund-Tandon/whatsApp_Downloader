@@ -9,20 +9,19 @@ Future<List> getWhatsAppStatusFiles()async{
     await Permission.storage.request();
     await Permission.manageExternalStorage.request();
   }
-  // print('2');
   List file= [];
-  print('2');
 
 
-  Directory s= Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');
+
+  Directory s= Directory('/storage/emulated/0/WhatsApp/Media/.Statuses');//possible directory 1
   bool dirExist= await s.exists();
   if(dirExist==false){
-    s = Directory('/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses');
+    s = Directory('/storage/emulated/0/Android/media/com.whatsapp/WhatsApp/Media/.Statuses');//possible directory 2
   }
   file=  s.listSync().map((item) => item.path).where((
       item) => item.endsWith(".nomedia")==false).toList(growable: false);
 
 
-  print('2');
+
   return file;
 }

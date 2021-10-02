@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:share_plus/share_plus.dart';
 import 'package:test_downloading_youtube/Utilities/storeDataInGallery.dart';
 import 'package:test_downloading_youtube/Utilities/deletefile.dart';
-import 'package:test_downloading_youtube/Screens/mainScreen.dart';
 class ImageView extends StatefulWidget {
 String path;
 bool isSaved;
@@ -21,9 +20,9 @@ class _ImageViewState extends State<ImageView> {
     Imagefilepath.add(widget.path);
   }
   void deleteFile()async{
-    await DeleteFile(widget.path);
+    await DeleteFile(widget.path, context);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+      Navigator.pop(context);
 
   }
   @override
@@ -76,7 +75,6 @@ class _ImageViewState extends State<ImageView> {
                                           style: TextStyle(
                                             fontSize: 18
                                           ),
-
                                         ),
                                         margin: EdgeInsets.symmetric(horizontal: 7),
                                         height: 70,
@@ -116,8 +114,8 @@ class _ImageViewState extends State<ImageView> {
                                                   ),
                                                 ),
                                                 onPressed: (){
-                                                  deleteFile();
-                                                  // Navigator.pop(context);
+                                                  deleteFile();//(lib/Utilities/deleteFile.dart)
+                                                  Navigator.pop(context);
                                                 },
                                               ),
                                             ),

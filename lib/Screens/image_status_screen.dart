@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
 import 'package:test_downloading_youtube/Widgets/ImageGridView.dart';
 class ImageStatus extends StatefulWidget {
-List file;
+List file;//image file recieved from mainScreen
 ImageStatus({required this.file});
 
   @override
@@ -17,18 +17,16 @@ class _ImageStatusState extends State<ImageStatus> {
     return Container(
       height: DeviceHieght(context),
       width: DeviceWidth(context),
-      // color: Colors.yellow,
       child: Column(
         children: [
       Expanded(
             child: Container(
-              // color: Colors.red,
               child: GridView.builder
                 (
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                   itemCount: widget.file.length,
                   itemBuilder:(BuildContext context, int index){
-                    return ImageGridView(path: '${widget.file[index]}',file: widget.file,index: index,);
+                    return ImageGridView(path: '${widget.file[index]}',file: widget.file,index: index,);//(lib/Widgets/ImageGridView.dart)
                   }),
             ),
           ),

@@ -16,12 +16,7 @@ class SavedImagesGridView extends StatefulWidget {
 }
 
 class _SavedImagesGridViewState extends State<SavedImagesGridView> {
-  void deleteFile()async{
-    await DeleteFile(widget.path);
-    setState(() {
-      print('done     fdfddf');
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
     double containerHeight= (135/843.43)*DeviceHieght(context);
@@ -36,8 +31,6 @@ class _SavedImagesGridViewState extends State<SavedImagesGridView> {
               setState(() {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageView(path: widget.path,isSaved: true,)));
               });
-
-
             },
 
             child: Container(
@@ -47,8 +40,6 @@ class _SavedImagesGridViewState extends State<SavedImagesGridView> {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.black54,
               ),
-              // alignment: Alignment.center,
-              // color: Colors.black54,
               margin: EdgeInsets.all(6),
               // padding: EdgeInsets.all(2),
               child: ClipRRect(
@@ -56,23 +47,6 @@ class _SavedImagesGridViewState extends State<SavedImagesGridView> {
                   child: Image.file(File('${widget.path}'),fit: BoxFit.fill,)),
             ),
           ),
-            Positioned(
-              top: .63*containerHeight,
-              left:.37*containerwidth,
-              child: Container(
-                height: .25*containerHeight,
-                width: .25*containerwidth,
-                child: FloatingActionButton(
-                  backgroundColor: Color(0xff009688),
-                  onPressed:(){
-
-                    deleteFile();
-                  },
-                  child: Icon(Icons.delete,color: Colors.white,),
-
-                ),
-              ),
-            ),
           ]
       ),
     );

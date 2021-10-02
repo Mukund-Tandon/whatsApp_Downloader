@@ -3,6 +3,7 @@ import 'package:test_downloading_youtube/test.dart';
 import 'package:test_downloading_youtube/Screens/mainScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:test_downloading_youtube/Models/selectedItemscount.dart';
+import 'package:test_downloading_youtube/Models/savedStatusListModel.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -10,6 +11,8 @@ void main() {
         providers: [
           ChangeNotifierProvider(
             create: (context)=>SelectedItemCount()),
+          ChangeNotifierProvider(
+              create: (context)=>SavedStatusListClass()),
 
         ],
         child: MyApp(),

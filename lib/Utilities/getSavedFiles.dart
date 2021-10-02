@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter/services.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
-Future<List> getSavedStatusFiles()async{
+Future<List<String>> getSavedStatusFiles()async{
   bool status1 = await Permission.manageExternalStorage.isDenied;
   bool status2 = await Permission.storage.isDenied;
   if (status1 == true || status2 ==true) {
@@ -12,7 +10,7 @@ Future<List> getSavedStatusFiles()async{
     await Permission.manageExternalStorage.request();
   }
   // print('2');
-  List file= [];
+  List<String> file= [];
   
   Directory s= Directory('/storage/emulated/0/DCIM/testApp/Picsdd');
   
@@ -20,6 +18,6 @@ Future<List> getSavedStatusFiles()async{
       item) => item.endsWith(".nomedia")==false).toList(growable: false);
 
 
-  print('2');
+
   return file;
 }

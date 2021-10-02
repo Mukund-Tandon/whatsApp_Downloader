@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:test_downloading_youtube/Utilities/GlobalVariables.dart';
 import 'package:provider/provider.dart';
 import 'package:test_downloading_youtube/Models/selectedItemscount.dart';
+import 'package:test_downloading_youtube/Widgets/selectedVideo.dart';
 class SelectItem extends StatefulWidget {
   List file;
   int index;
@@ -16,26 +17,28 @@ class SelectItem extends StatefulWidget {
 }
 
 class _SelectItemState extends State<SelectItem> {
-  bool isSlected=false;
+
+  late bool isVideo;
+
+   void onInitialised(){
+       if(widget.file[0].toString().endsWith('.mp4')){
+         isVideo= true;
+       }
+       else{
+         isVideo= false;
+       }
+   }
+
+ @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    print('init');
-    if(imageList_shareddownloaded.contains('${widget.file[widget.index]}')==false){
-      print('init2');
-      setState(() {
-        imageList_shareddownloaded.add('${widget.file[widget.index]}');
-        Provider.of<SelectedItemCount>(context,listen: false).increase();
-        print('listlength= ${imageList_shareddownloaded.length}');
-      });
-
-    }
+    onInitialised();
   }
   @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    print('dispose');
     imageList_shareddownloaded.clear();
   }
   @override
@@ -78,17 +81,11 @@ class _SelectItemState extends State<SelectItem> {
                               );
                         },
                       ),
-                      // child: Text(
-                      //   '${Provider.of<SelectedItemCount>(context,listen: false).count}',
-                      //   style: TextStyle(
-                      //     fontSize: 20
-                      //   ),
-                      // ),
                     ),
                     SizedBox(width: (200/411.43)*DeviceWidth(context),),
                     GestureDetector(
                       onTap: (){
-                        Share.shareFiles(imageList_shareddownloaded);
+                        Share.shareFiles(imageList_shareddownloaded);;
                       },
                       child: Container(
                         child: Icon(Icons.share_rounded,color: Colors.white,size: 30,),
@@ -97,7 +94,6 @@ class _SelectItemState extends State<SelectItem> {
                   ],
                 ),
               ),
-              // loader==true?CircularProgressIndicator():
               Expanded(
                 child: Container(
 
@@ -107,7 +103,7 @@ class _SelectItemState extends State<SelectItem> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                       itemCount: widget.file.length,
                       itemBuilder:(BuildContext context, int index){
-                        return widget.index==index?SelectedImage(path: '${widget.file[index]}',isSelected: true,):SelectedImage(path: '${widget.file[index]}',isSelected: false,);
+                        return isVideo?SelectedVideo(path:'${widget.file[index]}', index: widget.index, file: widget.file,): SelectedImage(path: '${widget.file[index]}',index: widget.index,file: widget.file,);//
                       }),
                 ),
               ),

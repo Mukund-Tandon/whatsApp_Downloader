@@ -2,25 +2,31 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
-import 'package:test_downloading_youtube/Screens/ImageView.dart';
 import 'package:test_downloading_youtube/Models/selectedItemscount.dart';
 import 'package:test_downloading_youtube/Utilities/GlobalVariables.dart';
 import 'package:provider/provider.dart';
-class SelectedImage extends StatefulWidget {
+import 'package:video_player/video_player.dart';
+import 'package:test_downloading_youtube/Screens/VideoView.dart';
+class SelectedVideo extends StatefulWidget {
   String path;
   int index;
   List file;
-  SelectedImage({ required this.path, required this.index, required this.file});
+
+  SelectedVideo({ required this.path, required this.index, required this.file});
 
   @override
-  _SelectedImageState createState() => _SelectedImageState();
+  _SelectedVideoState createState() => _SelectedVideoState();
 }
 
-class _SelectedImageState extends State<SelectedImage> {
-   bool isSelected = false;
-  void doInitialTask(){
+class _SelectedVideoState extends State<SelectedVideo> {
+  bool isSelected = false;
+  late VideoPlayerController controller;
+  void doInitialTask()async{
+    controller = VideoPlayerController.file(File('${widget.path}'));
+    await controller.initialize();
     WidgetsBinding.instance!.addPostFrameCallback((_){
       if(widget.file[widget.index]==widget.path) {
+
         imageList_shareddownloaded.add('${widget.file[widget.index]}');
 
         Provider.of<SelectedItemCount>(context, listen: false).increase();
@@ -56,7 +62,7 @@ class _SelectedImageState extends State<SelectedImage> {
     }
 
   }
- @override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -74,6 +80,8 @@ class _SelectedImageState extends State<SelectedImage> {
       // color: Colors.pink,
 
       child: Stack(
+        // alignment: Alignment.center,
+        //   fit: StackFit.expand,
           children: [
             Container(
               height:Containerheight,
@@ -82,11 +90,13 @@ class _SelectedImageState extends State<SelectedImage> {
                 borderRadius: BorderRadius.circular(15),
 
               ),
+              alignment: Alignment.center,
+              // color: Colors.black54,
               margin:isSelected? EdgeInsets.all(6):EdgeInsets.all(0),
 
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.file(File('${widget.path}'),fit: BoxFit.fill,)),
+                  child: controller.value.isInitialized?VideoPlayer(controller):CircularProgressIndicator()),
             ),
             GestureDetector(
               onTap: (){
@@ -114,7 +124,7 @@ class _SelectedImageState extends State<SelectedImage> {
               top: .75*Containerheight,
               child: GestureDetector(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageView(path: widget.path,isSaved: false,)));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>VideoView(path: widget.path,isSaved: true,)));
                 },
                 child: Container(
                   height: Containerheight*.2,

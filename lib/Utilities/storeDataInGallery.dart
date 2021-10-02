@@ -6,51 +6,29 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 void create_directory(String filepath)async {
   bool status = await Permission.storage.status.isDenied;
-  print('filepath=$filepath');
-  int index = filepath.indexOf('.Statuses')+11;
+  int index = filepath.indexOf('.Statuses')+10;//unique file name after .statuses
   if (status == true) {
     await Permission.storage.request();
   }
-  print('done');
+
   File image = File('$filepath');
-  // File image = await getImageFileFromFilePah(filepath);
-  print(image.path);
-  Directory? d=await getExternalStorageDirectory();
-  print(d!.path);
+
   final extDir = await Directory('/storage/emulated/0/DCIM/testApp').create(recursive: true);
-  print('done');
+
 
 // Path of file
-  final myImagePath = '${extDir.path}/Picsdd';
-  print('done');
+  final myImagePath = '${extDir.path}/Picsdd';//folder where images and videos will be stored in gallery
+
 
 // Create directory inside where file will be saved
   await new Directory(myImagePath).create();
-  print('d');
-  // final filename= p.basename(filepath);
-  print('done');
+
+
+
 // File copied to ext directory.
   File newImage =
   await image.copy("$myImagePath/${filepath.substring(index)}");
-  var load= await MediaScanner.loadMedia(path: '${myImagePath}');
-  print(newImage.path);
+  var load= await MediaScanner.loadMedia(path: '${myImagePath}');//notify gallery the new file is added
   Fluttertoast.showToast(msg: 'Saved',);
 
 }
-// Future<File> getImageFileFromFilePah(String filePath) async {
-//   // var data= await http.get(Uri.parse(url));
-//   File data = Image.file(File('$filePath'));
-//   // List<int> imageBytes = await data;
-//   String filename;
-//   if(filePath.endsWith('.jpg')){
-//     filename = 'img.jpg';
-//   }
-//   else{
-//     filename= 'vid.mp4';
-//   }
-//   final file = await File('${(await getApplicationDocumentsDirectory()).path}/$filename')
-//       .create(recursive: true);
-//   await file.writeAsBytes(data);
-//
-//   return file;
-// }
