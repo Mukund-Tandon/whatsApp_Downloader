@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_downloading_youtube/Utilities/instadownloads.dart';
+import 'package:whatsapp_status_saver/Utilities/instadownloads.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as p;
-import 'package:test_downloading_youtube/Utilities/getimageFileFromUrl.dart';
-import 'package:test_downloading_youtube/Utilities/getWhatsappStatusDirectories.dart';
+import 'package:whatsapp_status_saver/Utilities/getimageFileFromUrl.dart';
+import 'package:whatsapp_status_saver/Utilities/getWhatsappStatusDirectories.dart';
 import 'package:media_scanner/media_scanner.dart';
 import 'package:video_player/video_player.dart';
 

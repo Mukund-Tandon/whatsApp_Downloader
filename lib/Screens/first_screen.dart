@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
-import 'package:test_downloading_youtube/Screens/mainScreen.dart';
+import 'package:whatsapp_status_saver/Utilities/DeviceData/deviceSize.dart';
+import 'package:whatsapp_status_saver/Screens/mainScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FirstScreen extends StatelessWidget {

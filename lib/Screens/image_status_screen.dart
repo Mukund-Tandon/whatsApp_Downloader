@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
-import 'package:test_downloading_youtube/Widgets/ImageGridView.dart';
+import 'package:whatsapp_status_saver/Utilities/DeviceData/deviceSize.dart';
+import 'package:whatsapp_status_saver/Widgets/ImageGridView.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ImageStatus extends StatefulWidget {

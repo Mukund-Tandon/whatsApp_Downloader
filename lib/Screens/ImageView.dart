@@ -1,42 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
+import 'package:whatsapp_status_saver/Utilities/DeviceData/deviceSize.dart';
 import 'dart:io';
 import 'package:share_plus/share_plus.dart';
-import 'package:test_downloading_youtube/Utilities/storeDataInGallery.dart';
-import 'package:test_downloading_youtube/Utilities/deletefile.dart';
+import 'package:whatsapp_status_saver/Utilities/storeDataInGallery.dart';
+import 'package:whatsapp_status_saver/Utilities/deletefile.dart';
+
 class ImageView extends StatefulWidget {
-String path;
-bool isSaved;
-ImageView({required this.path , required this.isSaved});
+  String path;
+  bool isSaved;
+  ImageView({required this.path, required this.isSaved});
 
   @override
   _ImageViewState createState() => _ImageViewState();
 }
 
 class _ImageViewState extends State<ImageView> {
-  List<String> Imagefilepath= [];
-  void setPath(){
+  List<String> Imagefilepath = [];
+  void setPath() {
     Imagefilepath.add(widget.path);
   }
-  void deleteFile()async{
+
+  void deleteFile() async {
     await DeleteFile(widget.path, context);
 
-      Navigator.pop(context);
-
+    Navigator.pop(context);
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     setPath();
   }
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent
-      ),
+      value: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
       child: SafeArea(
         child: Scaffold(
           body: Container(
@@ -51,119 +52,137 @@ class _ImageViewState extends State<ImageView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      widget.isSaved?Material(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(100),
-                        child: InkWell(
-                          onTap: (){
-                            showDialog(context: context, builder: (context){
-
-                              return Dialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:  BorderRadius.circular(15),
-                                ),
-                                child: Container(
-                                  height: 120,
-                                  width: 200,
-                                  child: Column(
-                                    children: [
-                                      Container(
-
-                                        child: Text(
-                                          'Remove this from Saved?',
-                                          maxLines: 2,
-                                          style: TextStyle(
-                                            fontSize: 18
+                      widget.isSaved
+                          ? Material(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(100),
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
                                           ),
-                                        ),
-                                        margin: EdgeInsets.symmetric(horizontal: 7),
-                                        height: 70,
-                                        alignment: Alignment.center,
-                                      ),
-                                      Container(
-
-                                        child: Divider(
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(left: 20),
-                                        height: 30,
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              child: TextButton(
-                                                child: Text(
-                                                  'Cancel',
-                                                  style: TextStyle(
-                                                    color: Colors.blueAccent,
+                                          child: Container(
+                                            height: 120,
+                                            width: 200,
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                  child: Text(
+                                                    'Remove this from Saved?',
+                                                    maxLines: 2,
+                                                    style:
+                                                        TextStyle(fontSize: 18),
+                                                  ),
+                                                  margin: EdgeInsets.symmetric(
+                                                      horizontal: 7),
+                                                  height: 70,
+                                                  alignment: Alignment.center,
+                                                ),
+                                                Container(
+                                                  child: Divider(
+                                                    color: Colors.grey,
                                                   ),
                                                 ),
-                                                onPressed: (){
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            ),
-                                            SizedBox(width: (85/411.43)*DeviceWidth(context),),
-                                            Container(
-                                              child: TextButton(
-                                                child: Text(
-                                                  'Delete',
-                                                  style: TextStyle(
-                                                    color: Colors.red,
+                                                Container(
+                                                  margin:
+                                                      EdgeInsets.only(left: 20),
+                                                  height: 30,
+                                                  child: Row(
+                                                    children: [
+                                                      Container(
+                                                        child: TextButton(
+                                                          child: Text(
+                                                            'Cancel',
+                                                            style: TextStyle(
+                                                              color: Colors
+                                                                  .blueAccent,
+                                                            ),
+                                                          ),
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: (85 / 411.43) *
+                                                            DeviceWidth(
+                                                                context),
+                                                      ),
+                                                      Container(
+                                                        child: TextButton(
+                                                          child: Text(
+                                                            'Delete',
+                                                            style: TextStyle(
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                          onPressed: () {
+                                                            deleteFile(); //(lib/Utilities/deleteFile.dart)
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ),
-                                                onPressed: (){
-                                                  deleteFile();//(lib/Utilities/deleteFile.dart)
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
+                                                )
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                                          ),
+                                        );
+                                      },
+                                      barrierDismissible: false);
+                                },
+                                child: Container(
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                    size: 30,
                                   ),
-
+                                  margin: EdgeInsets.all(10),
+                                  height: 30,
+                                  width: 30,
                                 ),
-                              );
-                            },barrierDismissible: false);
-
-
-                          },
-                          child: Container(
-                            child: Icon(Icons.delete,color: Colors.white,size: 30,),
-                            margin: EdgeInsets.all(10),
-                            height: 30,
-                            width: 30,
-                          ),
-                        ),
-                      ):Material(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(100),
-                        child: InkWell(
-                          onTap: (){
-                            create_directory(widget.path);
-
-                          },
-                          child: Container(
-                            child: Icon(Icons.download_rounded,color: Colors.white,size: 30,),
-                            margin: EdgeInsets.all(10),
-                            height: 30,
-                            width: 30,
-                          ),
-                        ),
-                      ),
+                              ),
+                            )
+                          : Material(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(100),
+                              child: InkWell(
+                                onTap: () {
+                                  create_directory(widget.path);
+                                },
+                                child: Container(
+                                  child: Icon(
+                                    Icons.download_rounded,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                  margin: EdgeInsets.all(10),
+                                  height: 30,
+                                  width: 30,
+                                ),
+                              ),
+                            ),
                       Material(
                         color: Colors.transparent,
                         borderRadius: BorderRadius.circular(100),
                         child: InkWell(
-
-                          onTap: (){
+                          onTap: () {
                             Share.shareFiles(Imagefilepath);
                           },
                           child: Container(
-                            child: Icon(Icons.share_rounded,color: Colors.white,size: 30,),
+                            child: Icon(
+                              Icons.share_rounded,
+                              color: Colors.white,
+                              size: 30,
+                            ),
                             margin: EdgeInsets.all(10),
                             height: 30,
                             width: 30,
@@ -173,11 +192,13 @@ class _ImageViewState extends State<ImageView> {
                     ],
                   ),
                 ),
-                Expanded(child: Container(
+                Expanded(
+                    child: Container(
                   child: InteractiveViewer(
                     child: Container(
                       child: Image.file(File('${widget.path}')),
-                    ),),
+                    ),
+                  ),
                 ))
               ],
             ),

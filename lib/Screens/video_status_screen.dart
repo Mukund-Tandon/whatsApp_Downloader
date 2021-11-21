@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
-import 'package:test_downloading_youtube/Widgets/VideoGridView.dart';
+import 'package:whatsapp_status_saver/Utilities/DeviceData/deviceSize.dart';
+import 'package:whatsapp_status_saver/Widgets/VideoGridView.dart';
 
 class VideoStatus extends StatefulWidget {
   List file;

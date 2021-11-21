@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:test_downloading_youtube/test.dart';
-import 'package:test_downloading_youtube/Screens/mainScreen.dart';
+import 'package:whatsapp_status_saver/test.dart';
+import 'package:whatsapp_status_saver/Screens/mainScreen.dart';
 import 'package:provider/provider.dart';
-import 'package:test_downloading_youtube/Models/selectedItemscount.dart';
-import 'package:test_downloading_youtube/Models/savedStatusListModel.dart';
+import 'package:whatsapp_status_saver/Models/selectedItemscount.dart';
+import 'package:whatsapp_status_saver/Models/savedStatusListModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:test_downloading_youtube/Screens/first_screen.dart';
+import 'package:whatsapp_status_saver/Screens/first_screen.dart';
 
 Future<int> sharedpref() async {
   int option = 1;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:test_downloading_youtube/Utilities/DeviceData/deviceSize.dart';
-import 'package:test_downloading_youtube/Utilities/getWhatsappStatusDirectories.dart';
+import 'package:whatsapp_status_saver/Utilities/DeviceData/deviceSize.dart';
+import 'package:whatsapp_status_saver/Utilities/getWhatsappStatusDirectories.dart';
 import 'package:video_player/video_player.dart';
-import 'package:test_downloading_youtube/Screens/image_status_screen.dart';
-import 'package:test_downloading_youtube/Screens/video_status_screen.dart';
-import 'package:test_downloading_youtube/Screens/savedStatus.dart';
+import 'package:whatsapp_status_saver/Screens/image_status_screen.dart';
+import 'package:whatsapp_status_saver/Screens/video_status_screen.dart';
+import 'package:whatsapp_status_saver/Screens/savedStatus.dart';
 
 class MainScreen extends StatefulWidget {
   @override
