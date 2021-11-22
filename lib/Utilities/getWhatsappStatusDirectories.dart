@@ -6,13 +6,10 @@ import 'dart:io';
 Future<List> getWhatsAppStatusFiles(BuildContext context) async {
   bool status1 = await Permission.manageExternalStorage.isDenied;
   bool status2 = await Permission.storage.isDenied;
-  // if (status2 == true) {
-  //   await Permission.storage.request();
-  //   // await Permission.manageExternalStorage.request();
-  // }
+
   if (status1 == true || status2 == true) {
     await Permission.storage.request();
-    // await Permission.manageExternalStorage.request();
+    await Permission.manageExternalStorage.request();
   }
   List file = [];
 

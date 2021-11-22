@@ -45,7 +45,31 @@ class _ImageStatusState extends State<ImageStatus> {
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                                'images/undraw_mobile_app_re_catg.svg'),
+                              'images/undraw_mobile_app_re_catg.svg',
+                              height: (150 / 843.43) * DeviceHieght(context),
+                              width: (90 / 411.43) * DeviceWidth(context),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 10),
+                              child: Text(
+                                'Nothing to show :(',
+                                style: TextStyle(
+                                  color: Color(0xff009688),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8),
+                              padding: EdgeInsets.symmetric(horizontal: 40),
+                              child: Text(
+                                'For Status to appear here close this app and view the status on your WhatsApp ',
+                                style: TextStyle(
+                                  color: Color(0xcf009688),
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
